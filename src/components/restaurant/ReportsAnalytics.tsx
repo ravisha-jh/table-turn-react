@@ -16,12 +16,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useState } from 'react';
 
 const monthlyData = [
-  { month: 'Jan', revenue: 45000, orders: 1200, customers: 800 },
-  { month: 'Feb', revenue: 52000, orders: 1350, customers: 920 },
-  { month: 'Mar', revenue: 48000, orders: 1280, customers: 850 },
-  { month: 'Apr', revenue: 61000, orders: 1450, customers: 1100 },
-  { month: 'May', revenue: 55000, orders: 1380, customers: 980 },
-  { month: 'Jun', revenue: 67000, orders: 1520, customers: 1200 }
+  { month: 'Jan', revenue: 3600000, orders: 1200, customers: 800 },
+  { month: 'Feb', revenue: 4160000, orders: 1350, customers: 920 },
+  { month: 'Mar', revenue: 3840000, orders: 1280, customers: 850 },
+  { month: 'Apr', revenue: 4880000, orders: 1450, customers: 1100 },
+  { month: 'May', revenue: 4400000, orders: 1380, customers: 980 },
+  { month: 'Jun', revenue: 5360000, orders: 1520, customers: 1200 }
 ];
 
 const categoryData = [
@@ -32,11 +32,11 @@ const categoryData = [
 ];
 
 const topItems = [
-  { name: 'Classic Burger', orders: 245, revenue: 3185.55, trend: 'up' },
-  { name: 'Margherita Pizza', orders: 198, revenue: 2970.02, trend: 'up' },
-  { name: 'Caesar Salad', orders: 156, revenue: 1402.44, trend: 'down' },
-  { name: 'Grilled Chicken', orders: 134, revenue: 2276.66, trend: 'up' },
-  { name: 'Chocolate Cake', orders: 89, revenue: 622.11, trend: 'down' }
+  { name: 'Classic Burger', orders: 245, revenue: 254555, trend: 'up' },
+  { name: 'Margherita Pizza', orders: 198, revenue: 237602, trend: 'up' },
+  { name: 'Caesar Salad', orders: 156, revenue: 112164, trend: 'down' },
+  { name: 'Grilled Chicken', orders: 134, revenue: 182106, trend: 'up' },
+  { name: 'Chocolate Cake', orders: 89, revenue: 49751, trend: 'down' }
 ];
 
 const hourlyData = [
@@ -92,7 +92,7 @@ export const ReportsAnalytics = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">Total Revenue</p>
-                <p className="text-2xl font-bold text-green-600">$328,000</p>
+                <p className="text-2xl font-bold text-green-600">₹2,62,40,000</p>
                 <div className="flex items-center text-sm text-green-600 mt-1">
                   <TrendingUp className="h-3 w-3 mr-1" />
                   +15.3% vs last month
@@ -164,7 +164,7 @@ export const ReportsAnalytics = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip formatter={(value) => [`$${value}`, 'Revenue']} />
+                <Tooltip formatter={(value) => [`₹${value.toLocaleString()}`, 'Revenue']} />
                 <Line type="monotone" dataKey="revenue" stroke="#f97316" strokeWidth={3} />
               </LineChart>
             </ResponsiveContainer>
@@ -228,7 +228,7 @@ export const ReportsAnalytics = () => {
                     <p className="text-sm text-gray-600">{item.orders} orders</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-medium text-green-600">${item.revenue.toFixed(2)}</p>
+                    <p className="font-medium text-green-600">₹{item.revenue.toLocaleString()}</p>
                     <div className="flex items-center">
                       {item.trend === 'up' ? (
                         <TrendingUp className="h-3 w-3 text-green-600" />

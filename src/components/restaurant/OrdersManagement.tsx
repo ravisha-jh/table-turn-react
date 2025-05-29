@@ -19,10 +19,10 @@ const orders = [
     id: '#001',
     customer: 'John Doe',
     items: [
-      { name: 'Classic Burger', quantity: 2, price: 12.99 },
-      { name: 'Fries', quantity: 2, price: 4.99 }
+      { name: 'Classic Burger', quantity: 2, price: 1039 },
+      { name: 'Fries', quantity: 2, price: 399 }
     ],
-    total: 35.96,
+    total: 2876,
     status: 'pending',
     type: 'dine-in',
     table: 'Table 5',
@@ -33,10 +33,10 @@ const orders = [
     id: '#002',
     customer: 'Jane Smith',
     items: [
-      { name: 'Margherita Pizza', quantity: 1, price: 14.99 },
-      { name: 'Coke', quantity: 2, price: 2.99 }
+      { name: 'Margherita Pizza', quantity: 1, price: 1199 },
+      { name: 'Coke', quantity: 2, price: 239 }
     ],
-    total: 20.97,
+    total: 1677,
     status: 'preparing',
     type: 'takeaway',
     table: null,
@@ -47,10 +47,10 @@ const orders = [
     id: '#003',
     customer: 'Mike Johnson',
     items: [
-      { name: 'Caesar Salad', quantity: 1, price: 8.99 },
-      { name: 'Grilled Chicken', quantity: 1, price: 16.99 }
+      { name: 'Caesar Salad', quantity: 1, price: 719 },
+      { name: 'Grilled Chicken', quantity: 1, price: 1359 }
     ],
-    total: 25.98,
+    total: 2078,
     status: 'ready',
     type: 'delivery',
     address: '123 Main St, City',
@@ -61,10 +61,10 @@ const orders = [
     id: '#004',
     customer: 'Sarah Wilson',
     items: [
-      { name: 'Steak', quantity: 1, price: 24.99 },
-      { name: 'Wine', quantity: 1, price: 12.99 }
+      { name: 'Steak', quantity: 1, price: 1999 },
+      { name: 'Wine', quantity: 1, price: 1039 }
     ],
-    total: 37.98,
+    total: 3038,
     status: 'completed',
     type: 'dine-in',
     table: 'Table 12',
@@ -127,7 +127,7 @@ export const OrdersManagement = () => {
             {order.items.map((item: any, index: number) => (
               <div key={index} className="flex justify-between text-sm">
                 <span>{item.quantity}x {item.name}</span>
-                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                <span>₹{(item.price * item.quantity).toFixed(0)}</span>
               </div>
             ))}
           </div>
@@ -136,7 +136,7 @@ export const OrdersManagement = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center text-green-600">
                 <DollarSign className="h-4 w-4" />
-                <span className="font-bold">${order.total.toFixed(2)}</span>
+                <span className="font-bold">₹{order.total.toFixed(0)}</span>
               </div>
               {order.status !== 'completed' && (
                 <div className="flex items-center text-orange-600">

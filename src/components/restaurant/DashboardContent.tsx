@@ -23,10 +23,10 @@ const dailyStats = [
 ];
 
 const recentOrders = [
-  { id: '#001', customer: 'John Doe', items: 'Burger, Fries', total: '$24.99', status: 'completed', time: '2 min ago' },
-  { id: '#002', customer: 'Jane Smith', items: 'Pizza, Coke', total: '$18.50', status: 'preparing', time: '5 min ago' },
-  { id: '#003', customer: 'Mike Johnson', items: 'Pasta, Salad', total: '$22.00', status: 'pending', time: '8 min ago' },
-  { id: '#004', customer: 'Sarah Wilson', items: 'Steak, Wine', total: '$45.99', status: 'completed', time: '12 min ago' },
+  { id: '#001', customer: 'John Doe', items: 'Burger, Fries', total: '₹1,999', status: 'completed', time: '2 min ago' },
+  { id: '#002', customer: 'Jane Smith', items: 'Pizza, Coke', total: '₹1,480', status: 'preparing', time: '5 min ago' },
+  { id: '#003', customer: 'Mike Johnson', items: 'Pasta, Salad', total: '₹1,760', status: 'pending', time: '8 min ago' },
+  { id: '#004', customer: 'Sarah Wilson', items: 'Steak, Wine', total: '₹3,679', status: 'completed', time: '12 min ago' },
 ];
 
 export const DashboardContent = () => {
@@ -45,7 +45,7 @@ export const DashboardContent = () => {
             <DollarSign className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-900">$2,847.50</div>
+            <div className="text-2xl font-bold text-gray-900">₹2,27,801</div>
             <p className="text-xs text-green-600 flex items-center mt-1">
               <TrendingUp className="h-3 w-3 mr-1" />
               +12.5% from yesterday

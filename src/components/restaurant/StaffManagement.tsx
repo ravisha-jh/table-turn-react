@@ -25,11 +25,11 @@ const staff = [
     name: 'Alice Johnson',
     role: 'Chef',
     email: 'alice@restaurant.com',
-    phone: '+1 (555) 123-4567',
+    phone: '+91 98765 43210',
     shift: 'Morning',
     status: 'active',
     hiredDate: '2023-01-15',
-    salary: 3500,
+    salary: 45000,
     avatar: '/placeholder.svg'
   },
   {
@@ -37,11 +37,11 @@ const staff = [
     name: 'Bob Smith',
     role: 'Waiter',
     email: 'bob@restaurant.com',
-    phone: '+1 (555) 234-5678',
+    phone: '+91 98765 43211',
     shift: 'Evening',
     status: 'active',
     hiredDate: '2023-03-20',
-    salary: 2200,
+    salary: 28000,
     avatar: '/placeholder.svg'
   },
   {
@@ -49,11 +49,11 @@ const staff = [
     name: 'Carol Davis',
     role: 'Manager',
     email: 'carol@restaurant.com',
-    phone: '+1 (555) 345-6789',
+    phone: '+91 98765 43212',
     shift: 'Full Day',
     status: 'active',
     hiredDate: '2022-11-10',
-    salary: 4500,
+    salary: 60000,
     avatar: '/placeholder.svg'
   },
   {
@@ -61,11 +61,11 @@ const staff = [
     name: 'David Wilson',
     role: 'Bartender',
     email: 'david@restaurant.com',
-    phone: '+1 (555) 456-7890',
+    phone: '+91 98765 43213',
     shift: 'Evening',
     status: 'on-leave',
     hiredDate: '2023-05-08',
-    salary: 2800,
+    salary: 35000,
     avatar: '/placeholder.svg'
   },
   {
@@ -73,11 +73,11 @@ const staff = [
     name: 'Eva Brown',
     role: 'Waitress',
     email: 'eva@restaurant.com',
-    phone: '+1 (555) 567-8901',
+    phone: '+91 98765 43214',
     shift: 'Morning',
     status: 'active',
     hiredDate: '2023-07-12',
-    salary: 2200,
+    salary: 28000,
     avatar: '/placeholder.svg'
   },
   {
@@ -85,11 +85,11 @@ const staff = [
     name: 'Frank Miller',
     role: 'Kitchen Assistant',
     email: 'frank@restaurant.com',
-    phone: '+1 (555) 678-9012',
+    phone: '+91 98765 43215',
     shift: 'Full Day',
     status: 'active',
     hiredDate: '2023-09-01',
-    salary: 2000,
+    salary: 25000,
     avatar: '/placeholder.svg'
   }
 ];
@@ -172,7 +172,7 @@ export const StaffManagement = () => {
               </div>
               <div>
                 <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" placeholder="Enter phone number" />
+                <Input id="phone" placeholder="+91 98765 43210" />
               </div>
               <div>
                 <Label htmlFor="shift">Shift</Label>
@@ -188,7 +188,7 @@ export const StaffManagement = () => {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="salary">Monthly Salary ($)</Label>
+                <Label htmlFor="salary">Monthly Salary (₹)</Label>
                 <Input id="salary" type="number" placeholder="0" />
               </div>
               <div className="flex space-x-2 pt-4">
@@ -218,7 +218,7 @@ export const StaffManagement = () => {
         </Card>
         <Card>
           <CardContent className="p-6">
-            <div className="text-2xl font-bold text-orange-600">${avgSalary}</div>
+            <div className="text-2xl font-bold text-orange-600">₹{avgSalary.toLocaleString()}</div>
             <p className="text-sm text-gray-600">Average Salary</p>
           </CardContent>
         </Card>
@@ -282,7 +282,7 @@ export const StaffManagement = () => {
                   <span>Hired: {new Date(person.hiredDate).toLocaleDateString()}</span>
                 </div>
                 <div className="flex justify-between items-center pt-2 border-t">
-                  <span className="font-semibold text-green-600">${person.salary}/month</span>
+                  <span className="font-semibold text-green-600">₹{person.salary.toLocaleString()}/month</span>
                   <Badge className={getStatusColor(person.status)}>
                     {person.status.replace('-', ' ')}
                   </Badge>

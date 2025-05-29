@@ -23,7 +23,7 @@ const menuItems = [
     id: 1,
     name: 'Classic Burger',
     category: 'Main Course',
-    price: 12.99,
+    price: 1039,
     description: 'Juicy beef patty with lettuce, tomato, and special sauce',
     prepTime: 15,
     status: 'active',
@@ -33,7 +33,7 @@ const menuItems = [
     id: 2,
     name: 'Margherita Pizza',
     category: 'Main Course',
-    price: 14.99,
+    price: 1199,
     description: 'Fresh mozzarella, tomato sauce, and basil',
     prepTime: 20,
     status: 'active',
@@ -43,7 +43,7 @@ const menuItems = [
     id: 3,
     name: 'Caesar Salad',
     category: 'Appetizer',
-    price: 8.99,
+    price: 719,
     description: 'Crisp romaine lettuce with caesar dressing and croutons',
     prepTime: 10,
     status: 'active',
@@ -53,7 +53,7 @@ const menuItems = [
     id: 4,
     name: 'Chocolate Cake',
     category: 'Dessert',
-    price: 6.99,
+    price: 559,
     description: 'Rich chocolate cake with vanilla ice cream',
     prepTime: 5,
     status: 'inactive',
@@ -112,8 +112,8 @@ export const MenuManagement = () => {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="price">Price ($)</Label>
-                <Input id="price" type="number" placeholder="0.00" step="0.01" />
+                <Label htmlFor="price">Price (₹)</Label>
+                <Input id="price" type="number" placeholder="0" step="1" />
               </div>
               <div>
                 <Label htmlFor="prepTime">Prep Time (minutes)</Label>
@@ -189,7 +189,7 @@ export const MenuManagement = () => {
                 <div className="flex items-center space-x-4">
                   <div className="flex items-center text-green-600">
                     <DollarSign className="h-4 w-4" />
-                    <span className="font-bold">{item.price}</span>
+                    <span className="font-bold">₹{item.price}</span>
                   </div>
                   <div className="flex items-center text-orange-600">
                     <Clock className="h-4 w-4 mr-1" />
