@@ -13,13 +13,6 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-interface SidebarProps {
-  activeTab: string;
-  setActiveTab: (tab: string) => void;
-  collapsed: boolean;
-  setCollapsed: (collapsed: boolean) => void;
-}
-
 const menuItems = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'menu', label: 'Menu Management', icon: UtensilsCrossed },
@@ -30,7 +23,7 @@ const menuItems = [
   { id: 'reports', label: 'Reports', icon: BarChart3 },
 ];
 
-export const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }: SidebarProps) => {
+export const Sidebar = ({ activeTab, setActiveTab, collapsed, setCollapsed }) => {
   return (
     <div className={cn(
       "fixed left-0 top-0 h-full bg-gradient-to-b from-orange-600 to-red-600 text-white shadow-lg transition-all duration-300 z-30",

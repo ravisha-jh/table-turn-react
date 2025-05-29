@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -100,13 +99,13 @@ const inventory = [
   }
 ];
 
-const getStockStatus = (current: number, min: number) => {
+const getStockStatus = (current, min) => {
   if (current <= min) return 'critical';
   if (current <= min * 1.5) return 'low';
   return 'good';
 };
 
-const getStatusColor = (status: string) => {
+const getStatusColor = (status) => {
   switch (status) {
     case 'critical': return 'bg-red-100 text-red-800';
     case 'low': return 'bg-yellow-100 text-yellow-800';
@@ -115,7 +114,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getCategoryColor = (category: string) => {
+const getCategoryColor = (category) => {
   switch (category.toLowerCase()) {
     case 'meat': return 'bg-red-100 text-red-800';
     case 'vegetables': return 'bg-green-100 text-green-800';
