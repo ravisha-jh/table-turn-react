@@ -1,7 +1,5 @@
 
 import { useState } from 'react';
-import { Sidebar } from '@/components/restaurant/Sidebar';
-import { Header } from '@/components/restaurant/Header';
 import { DashboardContent } from '@/components/restaurant/DashboardContent';
 import { MenuManagement } from '@/components/restaurant/MenuManagement';
 import { OrdersManagement } from '@/components/restaurant/OrdersManagement';
@@ -9,7 +7,8 @@ import { TableManagement } from '@/components/restaurant/TableManagement';
 import { StaffManagement } from '@/components/restaurant/StaffManagement';
 import { InventoryManagement } from '@/components/restaurant/InventoryManagement';
 import { ReportsAnalytics } from '@/components/restaurant/ReportsAnalytics';
-import { Toaster } from '@/components/ui/toaster';
+import { Sidebar } from '@/components/restaurant/Sidebar';
+import { Header } from '@/components/restaurant/Header';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -44,19 +43,15 @@ const Index = () => {
         collapsed={sidebarCollapsed}
         setCollapsed={setSidebarCollapsed}
       />
-      
       <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'ml-16' : 'ml-64'}`}>
         <Header 
           sidebarCollapsed={sidebarCollapsed}
           setSidebarCollapsed={setSidebarCollapsed}
         />
-        
         <main className="p-6">
           {renderContent()}
         </main>
       </div>
-      
-      <Toaster />
     </div>
   );
 };
