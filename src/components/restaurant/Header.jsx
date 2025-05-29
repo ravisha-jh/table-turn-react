@@ -3,12 +3,7 @@ import { Menu, Bell, User, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-interface HeaderProps {
-  sidebarCollapsed: boolean;
-  setSidebarCollapsed: (collapsed: boolean) => void;
-}
-
-export const Header = ({ sidebarCollapsed, setSidebarCollapsed }: HeaderProps) => {
+export const Header = ({ sidebarCollapsed, setSidebarCollapsed }) => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
       <div className="flex items-center justify-between">

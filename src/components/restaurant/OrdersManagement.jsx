@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -74,7 +73,7 @@ const initialOrders = [
   }
 ];
 
-const getStatusColor = (status: string) => {
+const getStatusColor = (status) => {
   switch (status) {
     case 'pending': return 'bg-yellow-100 text-yellow-800';
     case 'preparing': return 'bg-blue-100 text-blue-800';
@@ -84,7 +83,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const getStatusIcon = (status: string) => {
+const getStatusIcon = (status) => {
   switch (status) {
     case 'pending': return <AlertCircle className="h-4 w-4" />;
     case 'preparing': return <Clock className="h-4 w-4" />;
@@ -99,12 +98,12 @@ export const OrdersManagement = () => {
   const [orders, setOrders] = useState(initialOrders);
   const { toast } = useToast();
 
-  const filterOrdersByStatus = (status: string) => {
+  const filterOrdersByStatus = (status) => {
     if (status === 'all') return orders;
     return orders.filter(order => order.status === status);
   };
 
-  const handleStatusChange = (orderId: string, newStatus: string) => {
+  const handleStatusChange = (orderId, newStatus) => {
     setOrders(orders.map(order => 
       order.id === orderId 
         ? { 
@@ -121,7 +120,7 @@ export const OrdersManagement = () => {
     });
   };
 
-  const OrderCard = ({ order }: { order: any }) => (
+  const OrderCard = ({ order }) => (
     <Card className="hover:shadow-lg transition-shadow duration-200">
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start">
@@ -144,7 +143,7 @@ export const OrdersManagement = () => {
       <CardContent>
         <div className="space-y-3">
           <div>
-            {order.items.map((item: any, index: number) => (
+            {order.items.map((item, index) => (
               <div key={index} className="flex justify-between text-sm">
                 <span>{item.quantity}x {item.name}</span>
                 <span>₹{(item.price * item.quantity).toFixed(0)}</span>
