@@ -17,8 +17,9 @@ import {
 } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useToast } from '@/hooks/use-toast';
 
-const menuItems = [
+const initialMenuItems = [
   {
     id: 1,
     name: 'Classic Burger',
@@ -62,9 +63,20 @@ const menuItems = [
 ];
 
 export const MenuManagement = () => {
+  const [menuItems, setMenuItems] = useState(initialMenuItems);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<any>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    category: '',
+    price: '',
+    prepTime: '',
+    description: ''
+  });
+  const { toast } = useToast();
 
   const filteredItems = menuItems.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -73,6 +85,89 @@ export const MenuManagement = () => {
   });
 
   const categories = ['all', 'Appetizer', 'Main Course', 'Dessert', 'Beverage'];
+
+  const handleAddItem = () => {
+    if (!formData.name || !formData.category || !formData.price) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const newItem = {
+      id: Math.max(...menuItems.map(item => item.id)) + 1,
+      name: formData.name,
+      category: formData.category,
+      price: parseInt(formData.price),
+      description: formData.description,
+      prepTime: parseInt(formData.prepTime) || 15,
+      status: 'active',
+      image: '/placeholder.svg'
+    };
+
+    setMenuItems([...menuItems, newItem]);
+    setFormData({ name: '', category: '', price: '', prepTime: '', description: '' });
+    setIsAddDialogOpen(false);
+    toast({
+      title: "Success",
+      description: "Menu item added successfully"
+    });
+  };
+
+  const handleEditItem = (item: any) => {
+    setEditingItem(item);
+    setFormData({
+      name: item.name,
+      category: item.category,
+      price: item.price.toString(),
+      prepTime: item.prepTime.toString(),
+      description: item.description
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleUpdateItem = () => {
+    if (!formData.name || !formData.category || !formData.price) {
+      toast({
+        title: "Error",
+        description: "Please fill in all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const updatedItems = menuItems.map(item => 
+      item.id === editingItem.id 
+        ? {
+            ...item,
+            name: formData.name,
+            category: formData.category,
+            price: parseInt(formData.price),
+            description: formData.description,
+            prepTime: parseInt(formData.prepTime) || 15
+          }
+        : item
+    );
+
+    setMenuItems(updatedItems);
+    setFormData({ name: '', category: '', price: '', prepTime: '', description: '' });
+    setIsEditDialogOpen(false);
+    setEditingItem(null);
+    toast({
+      title: "Success",
+      description: "Menu item updated successfully"
+    });
+  };
+
+  const handleDeleteItem = (itemId: number) => {
+    setMenuItems(menuItems.filter(item => item.id !== itemId));
+    toast({
+      title: "Success",
+      description: "Menu item deleted successfully"
+    });
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -94,37 +189,62 @@ export const MenuManagement = () => {
             </DialogHeader>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="name">Item Name</Label>
-                <Input id="name" placeholder="Enter item name" />
+                <Label htmlFor="add-name">Item Name</Label>
+                <Input 
+                  id="add-name" 
+                  placeholder="Enter item name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                />
               </div>
               <div>
-                <Label htmlFor="category">Category</Label>
-                <Select>
+                <Label htmlFor="add-category">Category</Label>
+                <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="appetizer">Appetizer</SelectItem>
-                    <SelectItem value="main">Main Course</SelectItem>
-                    <SelectItem value="dessert">Dessert</SelectItem>
-                    <SelectItem value="beverage">Beverage</SelectItem>
+                    <SelectItem value="Appetizer">Appetizer</SelectItem>
+                    <SelectItem value="Main Course">Main Course</SelectItem>
+                    <SelectItem value="Dessert">Dessert</SelectItem>
+                    <SelectItem value="Beverage">Beverage</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <Label htmlFor="price">Price (₹)</Label>
-                <Input id="price" type="number" placeholder="0" step="1" />
+                <Label htmlFor="add-price">Price (₹)</Label>
+                <Input 
+                  id="add-price" 
+                  type="number" 
+                  placeholder="0" 
+                  step="1"
+                  value={formData.price}
+                  onChange={(e) => setFormData({...formData, price: e.target.value})}
+                />
               </div>
               <div>
-                <Label htmlFor="prepTime">Prep Time (minutes)</Label>
-                <Input id="prepTime" type="number" placeholder="15" />
+                <Label htmlFor="add-prepTime">Prep Time (minutes)</Label>
+                <Input 
+                  id="add-prepTime" 
+                  type="number" 
+                  placeholder="15"
+                  value={formData.prepTime}
+                  onChange={(e) => setFormData({...formData, prepTime: e.target.value})}
+                />
               </div>
               <div>
-                <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Enter item description" />
+                <Label htmlFor="add-description">Description</Label>
+                <Textarea 
+                  id="add-description" 
+                  placeholder="Enter item description"
+                  value={formData.description}
+                  onChange={(e) => setFormData({...formData, description: e.target.value})}
+                />
               </div>
               <div className="flex space-x-2 pt-4">
-                <Button className="flex-1 bg-orange-600 hover:bg-orange-700">Add Item</Button>
+                <Button className="flex-1 bg-orange-600 hover:bg-orange-700" onClick={handleAddItem}>
+                  Add Item
+                </Button>
                 <Button variant="outline" className="flex-1" onClick={() => setIsAddDialogOpen(false)}>
                   Cancel
                 </Button>
@@ -133,6 +253,78 @@ export const MenuManagement = () => {
           </DialogContent>
         </Dialog>
       </div>
+
+      {/* Edit Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Edit Menu Item</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="edit-name">Item Name</Label>
+              <Input 
+                id="edit-name" 
+                placeholder="Enter item name"
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+              />
+            </div>
+            <div>
+              <Label htmlFor="edit-category">Category</Label>
+              <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Appetizer">Appetizer</SelectItem>
+                  <SelectItem value="Main Course">Main Course</SelectItem>
+                  <SelectItem value="Dessert">Dessert</SelectItem>
+                  <SelectItem value="Beverage">Beverage</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="edit-price">Price (₹)</Label>
+              <Input 
+                id="edit-price" 
+                type="number" 
+                placeholder="0" 
+                step="1"
+                value={formData.price}
+                onChange={(e) => setFormData({...formData, price: e.target.value})}
+              />
+            </div>
+            <div>
+              <Label htmlFor="edit-prepTime">Prep Time (minutes)</Label>
+              <Input 
+                id="edit-prepTime" 
+                type="number" 
+                placeholder="15"
+                value={formData.prepTime}
+                onChange={(e) => setFormData({...formData, prepTime: e.target.value})}
+              />
+            </div>
+            <div>
+              <Label htmlFor="edit-description">Description</Label>
+              <Textarea 
+                id="edit-description" 
+                placeholder="Enter item description"
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+              />
+            </div>
+            <div className="flex space-x-2 pt-4">
+              <Button className="flex-1 bg-orange-600 hover:bg-orange-700" onClick={handleUpdateItem}>
+                Update Item
+              </Button>
+              <Button variant="outline" className="flex-1" onClick={() => setIsEditDialogOpen(false)}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-4">
@@ -174,10 +366,15 @@ export const MenuManagement = () => {
                   </Badge>
                 </div>
                 <div className="flex space-x-1">
-                  <Button size="sm" variant="ghost">
+                  <Button size="sm" variant="ghost" onClick={() => handleEditItem(item)}>
                     <Edit className="h-4 w-4" />
                   </Button>
-                  <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700">
+                  <Button 
+                    size="sm" 
+                    variant="ghost" 
+                    className="text-red-600 hover:text-red-700"
+                    onClick={() => handleDeleteItem(item.id)}
+                  >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>

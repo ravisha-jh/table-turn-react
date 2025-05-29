@@ -13,8 +13,9 @@ import {
   Eye
 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 
-const orders = [
+const initialOrders = [
   {
     id: '#001',
     customer: 'John Doe',
@@ -53,7 +54,7 @@ const orders = [
     total: 2078,
     status: 'ready',
     type: 'delivery',
-    address: '123 Main St, City',
+    address: '123 Main St, Mumbai',
     time: '8 min ago',
     estimatedTime: 5
   },
@@ -95,10 +96,29 @@ const getStatusIcon = (status: string) => {
 
 export const OrdersManagement = () => {
   const [selectedTab, setSelectedTab] = useState('all');
+  const [orders, setOrders] = useState(initialOrders);
+  const { toast } = useToast();
 
   const filterOrdersByStatus = (status: string) => {
     if (status === 'all') return orders;
     return orders.filter(order => order.status === status);
+  };
+
+  const handleStatusChange = (orderId: string, newStatus: string) => {
+    setOrders(orders.map(order => 
+      order.id === orderId 
+        ? { 
+            ...order, 
+            status: newStatus,
+            estimatedTime: newStatus === 'completed' ? 0 : order.estimatedTime
+          }
+        : order
+    ));
+
+    toast({
+      title: "Order Updated",
+      description: `Order ${orderId} marked as ${newStatus}`
+    });
   };
 
   const OrderCard = ({ order }: { order: any }) => (
@@ -168,17 +188,29 @@ export const OrdersManagement = () => {
                 <Eye className="h-4 w-4" />
               </Button>
               {order.status === 'pending' && (
-                <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                <Button 
+                  size="sm" 
+                  className="bg-blue-600 hover:bg-blue-700"
+                  onClick={() => handleStatusChange(order.id, 'preparing')}
+                >
                   Start Preparing
                 </Button>
               )}
               {order.status === 'preparing' && (
-                <Button size="sm" className="bg-green-600 hover:bg-green-700">
+                <Button 
+                  size="sm" 
+                  className="bg-green-600 hover:bg-green-700"
+                  onClick={() => handleStatusChange(order.id, 'ready')}
+                >
                   Mark Ready
                 </Button>
               )}
               {order.status === 'ready' && (
-                <Button size="sm" className="bg-gray-600 hover:bg-gray-700">
+                <Button 
+                  size="sm" 
+                  className="bg-gray-600 hover:bg-gray-700"
+                  onClick={() => handleStatusChange(order.id, 'completed')}
+                >
                   Complete
                 </Button>
               )}
